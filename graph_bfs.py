@@ -1,4 +1,8 @@
+# pop(0)는 time complexity가 O(N)이므로 deque의 popleft를 활용한다
+# 너비탐색은 옆으로 넓게 탐색하니 옆으로 늘어지는 큐를 사용한다고 기억하자
 from collections import deque
+
+
 def solution(graph, start_node):
     queue = deque()
     visit = []
@@ -27,6 +31,4 @@ graph = {
     'M': ['H']
 }
 
-
 assert solution(graph, 'A') == ['A', 'B', 'C', 'H', 'D', 'I', 'J', 'M', 'E', 'G', 'K', 'F', 'L']
-
