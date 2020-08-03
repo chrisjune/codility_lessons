@@ -1,18 +1,18 @@
-# pop(0)는 time complexity가 O(N)이므로 deque의 popleft를 활용한다
-# 너비탐색은 옆으로 넓게 탐색하니 옆으로 늘어지는 큐를 사용한다고 기억하자
+# pop(0)은 O(N)
+# collection 의 deque를 사용하면 O(1)
+# 너비로 넓히기 때문에 queue를 사용한다고 기억하하자
+
 from collections import deque
-
-
 def solution(graph, start_node):
     queue = deque()
-    visit = []
     queue.append(start_node)
+    visited = []
     while queue:
         node = queue.popleft()
-        if node not in visit:
-            visit.append(node)
+        if node not in visited:
+            visited.append(node)
             queue.extend(graph[node])
-    return visit
+    return visited
 
 
 graph = {

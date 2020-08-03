@@ -1,15 +1,14 @@
-# 깊이 우선 탐색의 경우, 깊게 먼저 탐색을하니 깊게 쌓아나가는 스택을 사용한다고 기억하자
-
+# dfs 는 깊이로 들어가기 때문에 스택을 사용한다고 기억하자
 def solution(graph, start_node):
     stack = []
-    visit = []
+    visited = []
     stack.append(start_node)
     while stack:
         node = stack.pop()
-        if node not in visit:
-            visit.append(node)
+        if node not in visited:
+            visited.append(node)
             stack.extend(graph[node][::-1])
-    return visit
+    return visited
 
 
 graph = {
@@ -27,5 +26,4 @@ graph = {
     'L': ['K'],
     'M': ['H']
 }
-
 assert solution(graph, 'A') == ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
