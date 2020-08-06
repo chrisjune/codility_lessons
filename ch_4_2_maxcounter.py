@@ -1,10 +1,7 @@
 # You are given N counters, initially set to 0, and you have two possible operations on them:
 #
-# increase(X) − counter X is increased by 1,
-# max counter − all counters are set to the maximum value of any counter.
 # A non-empty array A of M integers is given. This array represents consecutive operations:
 #
-# if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X),
 # if A[K] = N + 1 then operation K is max counter.
 # For example, given integer N = 5 and array A such that:
 #
@@ -52,19 +49,30 @@
 
 
 def solution(N, A):
-    l = [0] * N
-    maxval = 0
-    for i in range(len(A)):
-        a = A[i]
-        if a <= N:
-            l[a - 1] += 1
-            maxval = max(maxval, l[a - 1])
+    global_max = 0
+    local_max = 0
+    output = [0] * N
+    for ele in A:
+        index = ele - 1
+        if ele > N:
+            local_max = global_max
+            continue
+
+        if output[index] < local_max:
+            output[index] += (local_max + 1)
         else:
-            l = [maxval] * N
-    return l
+            output[index] += 1
+        global_max = max(global_max, output[index])
+
+    for i in range(len(output)):
+        if output[i] < local_max:
+            output[i] = local_max
+    return output
 
 
+print(solution(5, [3, 4, 4, 6, 1, 4, 4]))
 assert solution(5, [3, 4, 4, 6, 1, 4, 4]) == [3, 2, 2, 4, 2]
-print(solution(1, [2, 2, 2, 2]))
 assert solution(1, [2, 2, 2, 2]) == [0]
 assert solution(2, [2]) == [0, 1]
+print(solution(5, [6, 6, 6, 6, 6, 6]))
+assert solution(5, [1, 2, 3, 1, 6, 6, 6, 6, 6]) == [2, 2, 2, 2, 2]
