@@ -5,6 +5,14 @@ class Solution:
         for idx, ele in enumerate(s):
             if ele == '(':
                 stack.append(idx)
+                queue = []
+                count = 0
+                inner = False
+                for ele in s:
+                    queue.append(ele)
+                    if ''.join(queue[-2:]) == "()":
+                        count += 2
+                return count
             else:
                 if stack:
                     left_position = stack.pop()
