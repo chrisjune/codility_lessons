@@ -42,17 +42,23 @@
 # N is an integer within the range [2..100,000];
 # each element of array A is an integer within the range [−10,000..10,000].
 
-def solution(A, P, Q):
+def solution(A):
     p = [0] * (len(A) + 1)
     for i, a in enumerate(A):
-        p[i] = p[i-1] + a
+        p[i] = p[i - 1] + a
 
-    result = []
-    for i in range(len(P)):
-        left = Q[i]
-        right = P[i]
-        average = (p[left] - p[right-1]) / (left - right + 1)
-        result.append(average)
-    return result
+    maxval = 9876543221
+    idx = 0
+    for step in range(1, len(A)):
+        left = 0
+        right = step
+        while right < len(A):
+            left += 1
+            right += 1
+            average = (p[right] - p[left - 1]) / (right - left + 1)
+            if average < maxval:
+                idx = left
+    return idx
 
-assert solution([4,2,2,5,1,5,8],[1,3,1],[2,4,4]) == [2,3,2.5]
+
+assert solution([4, 2, 2, 5, 1, 5, 8]) == 1
