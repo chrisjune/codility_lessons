@@ -43,22 +43,31 @@
 # each element of array A is an integer within the range [−10,000..10,000].
 
 def solution(A):
-    p = [0] * (len(A) + 1)
-    for i, a in enumerate(A):
-        p[i] = p[i - 1] + a
+    g_min_avg = sum(A[:2]) / 2.0
+    g_min_idx = 0
+    # search by 2 steps
+    for i in range(len(A) - 1):
+        # print(i, g_min_idx, g_min_avg)
+        l_min_avg = sum(A[i:i + 2]) / 2.0
+        l_min_idx = i
+        if l_min_avg < g_min_avg:
+            g_min_avg = l_min_avg
+            g_min_idx = l_min_idx
 
-    maxval = 9876543221
-    idx = 0
-    for step in range(1, len(A)):
-        left = 0
-        right = step
-        while right < len(A):
-            left += 1
-            right += 1
-            average = (p[right] - p[left - 1]) / (right - left + 1)
-            if average < maxval:
-                idx = left
-    return idx
+    # search by 3 steps
+    for i in range(len(A) - 2):
+        # print(i, g_min_idx, g_min_avg)
+        l_min_avg = sum(A[i:i + 3]) / 3.0
+        l_min_idx = i
+        if l_min_avg < g_min_avg:
+            g_min_avg = l_min_avg
+            g_min_idx = l_min_idx
+
+    return g_min_idx
 
 
 assert solution([4, 2, 2, 5, 1, 5, 8]) == 1
+# print(solution([5,4,3,2,1]))
+assert solution([5, 4, 3, 2, 1]) == 3
+assert solution([5, 4, 1, 2, 1]) == 2
+
